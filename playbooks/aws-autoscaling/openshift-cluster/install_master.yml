@@ -3,30 +3,6 @@
   hosts: localhost
   tasks:
   - ec2_metadata_facts:
-
-- import_playbook: ../../init/main.yml
-
-- name: Configure node
-  hosts: localhost
-  tasks:
-    - import_role:
-      name: openshift_node_group
-      tasks_from: bootstrap.yml
-
-- name: configure the control plane
-  import_playbook: ../../common/private/control_plane.yml
-
-# - name: set the master facts for hostname to elb
-#   hosts: masters
-#   gather_facts: no
-#   remote_user: root
-#   tasks:
-#   - import_role:
-#       name: openshift_aws
-#       tasks_from: master_facts.yml
-
-# - name: run the init
-#   import_playbook: ../../init/main.yml
-
-# - import_playbook: ../../openshift-checks/private/install.yml
+  roles:
+    - openshift-node
 
