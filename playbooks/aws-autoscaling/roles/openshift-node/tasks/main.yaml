@@ -5,9 +5,16 @@
     dest: "/etc/origin/node/bootstrap-node-config.yaml"
     mode: 0600
 
-- name: Update bootstrap-node-config.yaml to use crio
-  yedit:
-    content:
-    src: "/etc/origin/node/bootstrap-node-config.yaml"
-    edits: "{{ openshift_node_group_edits_crio }}"
-  when: openshift_use_crio | bool
+- name: Create directory if it does not exist
+  file:
+    path: /etc/origin/cloudprovider
+    state: directory
+    mode: '0755'
+  
+- name: Create cloud provider config
+  copy:
+    dest: /etc/origin/cloudprovider/aws.conf
+    content: >
+      # Cloud Provider Configuration
+      openshift_clusterid={{ openshift_clusterid }}
+
