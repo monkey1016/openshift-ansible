@@ -13,3 +13,4 @@ openshift_node_group_name: 'node-config-compute'
 iptables_sync_period: '30s'
 
 node_labels: []
+openshift_is_atomic: False
