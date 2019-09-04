@@ -5,6 +5,17 @@
     dest: "/etc/origin/node/bootstrap-node-config.yaml"
     mode: 0600
 
+- name: "specialize the generated configs for {{ l_openshift_node_group_name }}"
+  yedit:
+    content:
+    src: "/etc/origin/node/bootstrap-node-config.yaml"
+    edits: "{{ l_openshift_node_group_all_edits }}"
+  register: yeditout
+  run_once: true
+  vars:
+    l_openshift_node_group_all_edits: "{{ l_openshift_node_group_edits | union(openshift_node_labels_edit) }}"
+  when: l_openshift_node_group_all_edits != []
+
 - name: Update bootstrap-node-config.yaml to use crio
   yedit:
     content:
